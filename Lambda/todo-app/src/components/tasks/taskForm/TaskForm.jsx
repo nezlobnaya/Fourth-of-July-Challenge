@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 
-function TaskForm({setTasks, tasks}) {
+function TaskForm({ setTasks, tasks, history }) {
     const [formValues, setFormValues] =useState({
         id: Date.now(),
         task: '',
@@ -14,15 +14,22 @@ function TaskForm({setTasks, tasks}) {
     function handleSubmit(e) {
         e.preventDefault();
         setFormValues(state => ({...state, id: Date.now()}));
-        setTasks([...tasks, formValues])
-        console.log(formValues);
+        setTasks([...tasks, formValues]);
+        history.push('/');
     }
+
+    function handleCancel() {
+        history.push('/');
+    }
+    
     return (
         <div>
             <h1>Task Form</h1>
             <form onSubmit={handleSubmit}>
                 <label>Task</label>
                 <input name='task' value={formValues.task} onChange={handleChange} />
+                <button type='submit'>Submit</button>
+                <button onClick={handleCancel}>Cancel</button>
             </form>
         </div>
     )
